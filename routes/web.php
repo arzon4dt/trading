@@ -29,15 +29,18 @@ Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logou
 
     Route::prefix('admin-crud')->group(function(){
         Route::get('/', 'AdminCrudController@index')->name('admin-crud');
+        Route::post('/anyData','AdminCrudController@anyData');
     });
 
     Route::prefix('data-import')->group(function(){
         Route::get('/', 'DataImportController@index')->name('data-import');
         Route::post('/import-file', 'DataImportController@importFile')->name('data-import.import-file');
+        Route::get('/anyData','DataImportController@anyData');
     });
 
     Route::prefix('trend')->group(function(){
         Route::get('/', 'TrendController@index')->name('trend');
+        Route::post('/getJsonData', 'TrendController@getJsonData')->name('data-import.get-json-data');
     });
 
 

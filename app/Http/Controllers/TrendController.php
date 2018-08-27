@@ -25,4 +25,13 @@ class TrendController extends Controller
     {
         return view('backend.trend', ['js' => 'trend']);
     }
+
+    public function getJsonData(){
+        return response()->json([
+            'name' => 'Abigail',
+            'state' => 'CA'
+        ]);
+    }
+
+
 }

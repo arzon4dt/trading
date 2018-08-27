@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Admin as Admin;
+use Yajra\Datatables\Datatables;
 
 class AdminCrudController extends Controller
 {
@@ -24,5 +26,10 @@ class AdminCrudController extends Controller
     public function index()
     {
         return view('backend.admin-crud', ['js' => 'admin-crud']);
+    }
+
+    public function anyData()
+    {
+        return Datatables::of(Admin::query())->make(true);
     }
 }

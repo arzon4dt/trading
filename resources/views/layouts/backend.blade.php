@@ -77,6 +77,9 @@
 <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <!-- FastClick -->
 <script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
+<script>
+   var site_url = "{{ url('/') }}";
+</script>
 <!-- App -->
 <script src="{{ asset('app/app.js') }}"></script>
 <!-- AdminLTE App -->

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Currency as Currency;
+use App\TradeData as TradeData;
+use Yajra\Datatables\Datatables;
 
 class DataImportController extends Controller
 {
@@ -78,5 +80,10 @@ class DataImportController extends Controller
 
         dd('Request data does not have any files to import.');
 
+    }
+
+    public function anyData()
+    {
+        return Datatables::of(TradeData::query())->make(true);
     }
 }
