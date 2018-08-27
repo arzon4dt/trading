@@ -17,6 +17,10 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
+    <!-- AnyChart -->
+    <link rel="stylesheet" href="https://cdn.anychart.com/releases/8.3.0/css/anychart-ui.min.css" />
+    <link rel="stylesheet" href="https://cdn.anychart.com/releases/8.3.0/fonts/css/anychart-font.min.css" />
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -75,5 +79,14 @@
             @yield('content')
         </main>
     </div>
+<!-- AnyChart -->
+<script src="https://cdn.anychart.com/releases/8.3.0/js/anychart-base.min.js"></script>
+<script src="https://cdn.anychart.com/releases/8.3.0/js/anychart-ui.min.js"></script>
+<script src="https://cdn.anychart.com/releases/8.3.0/js/anychart-exports.min.js"></script>
+<script src="https://cdn.anychart.com/releases/8.3.0/js/anychart-stock.min.js"></script>
+<script src="https://cdn.anychart.com/releases/8.3.0/js/anychart-data-adapter.min.js"></script>
+@if (isset($js))
+<script src="{{ asset('app/'.$js.'.js') }}"></script>
+@endif
 </body>
 </html>

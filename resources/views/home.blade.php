@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+        <div class="col-md-12">
+            <div class="card" id="chart-panel">
+                <div class="card-header">Candle Stick Chart</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -13,9 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    @component('components.who')
-
-                    @endcomponent
+                    <div id="candlestickchart" style="height: 600px"></div>
                 </div>
             </div>
         </div>

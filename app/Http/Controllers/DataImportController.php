@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Currency as Currency;
 
 class DataImportController extends Controller
 {
@@ -28,39 +29,48 @@ class DataImportController extends Controller
     }
 
     public function importFile(Request $request){
-
         if($request->hasFile('sample_file')){
+
+            $currency = $request->input('currency');
+            if(isset($currency) == false){
+                $filename = $request->file('sample_file')->getClientOriginalName();
+                $filename = explode("_", $filename);
+                if(sizeof($filename) >= 3 ){
+                    $currency = $filename[2];
+                }
+            }
+
+            $currency_id = Currency::getCurrencyId($currency);
 
             $path = $request->file('sample_file')->getRealPath();
 
-            $data = \Excel::load($path)->get();
-
+            $data = \Excel::load($path, function($reader) { $reader->noHeading = true; })->get();
             if($data->count()){
-                //dd($data);
-                $count100 = 1;
+                $devider = 1000;
+                $count_devider = 1;
                 $i = 1;
                 foreach ($data as $key => $value) {
-                    $arr[] = ['id_currency' => 1,
-                              'trade_date' => $value->trade_date,
-                              'open_bid' => $value->open_bid,
-                              'high_bid' => $value->high_bid,
-                              'low_bid' => $value->low_bid,
-                              'close_bid' => $value->close_bid,
-                              'volume' => $value->volume,
+                    $arr[] = ['id_currency' => $currency_id,
+                              'trade_date' => $value[0],
+                              'open_bid' => $value[1],
+                              'high_bid' => $value[2],
+                              'low_bid' => $value[3],
+                              'close_bid' => $value[4],
+                              'volume' => $value[5],
                             ];
-                    if($i >= 1000){
-                        break;
+                    if($i == $count_devider*$devider || $i == $data->count()){
+                        if(!empty($arr)){
+
+                            DB::table('trade_data')->insert($arr);
+                            unset($arr);
+
+                        }
+                        $count_devider++;
                     }
                     $i++;
                 }
 
-                if(!empty($arr)){
-
-                    DB::table('trade_data')->insert($arr);
-
                     dd('Insert Recorded successfully.');
-
-                }
 
             }
 
