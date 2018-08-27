@@ -3,6 +3,14 @@
 
  <!-- Main content -->
  @section('content')
+ <style>
+#candlestickchart {
+    width: 100%;
+    height: 600px;
+    margin: 0;
+    padding: 0;
+}
+</style>
  <section class="content">
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -17,7 +25,7 @@
             <div class="icon">
                 <i class="ion ion-person"></i>
             </div>
-            <a href="{{ route('register') }}" class="small-box-footer">Enter <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin-crud') }}" class="small-box-footer">Enter <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -32,7 +40,7 @@
             <div class="icon">
                 <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">Enter <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('data-import') }}" class="small-box-footer">Enter <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -47,7 +55,7 @@
             <div class="icon">
                 <i class="ion ion-arrow-graph-up-right"></i>
             </div>
-            <a href="#" class="small-box-footer">Enter <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('trend') }}" class="small-box-footer">Enter <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -62,10 +70,27 @@
             <div class="icon">
                 <i class="ion ion-android-settings"></i>
             </div>
-            <a href="#" class="small-box-footer">Enter <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ route('admin-crud') }}" class="small-box-footer">Enter <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Hover Data Table</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div id="candlestickchart"></div>
+            </div>
+            <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
     </div>
     <!-- /.row -->
   </section>

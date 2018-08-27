@@ -26,3 +26,18 @@ Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logou
         Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
         Route::get('/', 'AdminController@index')->name('admin.dashboard');
     });
+
+    Route::prefix('admin-crud')->group(function(){
+        Route::get('/', 'AdminCrudController@index')->name('admin-crud');
+    });
+
+    Route::prefix('data-import')->group(function(){
+        Route::get('/', 'DataImportController@index')->name('data-import');
+        Route::post('/import-file', 'DataImportController@importFile')->name('data-import.import-file');
+    });
+
+    Route::prefix('trend')->group(function(){
+        Route::get('/', 'TrendController@index')->name('trend');
+    });
+
+

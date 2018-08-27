@@ -2,7 +2,7 @@
     <nav class="navbar navbar-static-top">
         <div class="container">
         <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand"><b>Trad</b>ING</a>
+            <a href="{{ route('admin.dashboard') }}" class="navbar-brand"><b>Trad</b>ING</a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
             </button>
@@ -11,15 +11,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
             <ul class="nav navbar-nav">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Admin</a></li>
-                <li><a href="#">Import</a></li>
-                <li><a href="#">Trend</a></li>
-                <li><a href="#">Settings</a></li>
-                </ul>
-            </li>
+                <li><a href="{{ route('admin-crud') }}">Admin</a></li>
+                <li><a href="{{ route('data-import') }}">Import</a></li>
+                <li><a href="{{ route('trend') }}">Trend</a></li>
+                <li><a href="{{ route('admin-crud') }}">Settings</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
