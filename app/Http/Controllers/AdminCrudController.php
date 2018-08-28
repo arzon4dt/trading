@@ -25,7 +25,7 @@ class AdminCrudController extends Controller
      */
     public function index()
     {
-        return view('backend.admin-crud', ['js' => 'admin-crud', 'menu' => 'Dashboard']);
+        return view('backend.admin-crud', ['js' => 'admin-crud', 'menu' => 'Admin CRUD']);
     }
 
     public function anyData()

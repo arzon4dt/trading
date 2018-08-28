@@ -1,34 +1,17 @@
 anychart.onDocumentReady(function() {
     // The data used in this sample can be obtained from the CDN
     // https://cdn.anychart.com/csv-data/csco-daily.csv
-    //anychart.data.loadCsvFile('https://cdn.anychart.com/csv-data/csco-daily.csv', function(data) {
-      // create data table on loaded data
-    //   var data = []
-    //   var year = 2017;
-    //   var month = 7;
-    //   var day = 23;
-    //   var hour = 0;
-    //   var minute = 0;
-    //   for(let i = 1; i <= 46; i++){
-    //     if(i%23 == 0){
-    //         hour = 0;
-    //         day++;
-    //     }
-    //     var item = [Date.UTC(year, month, day, hour, minute), 23.00, 23.50, 23.25, 23.40]
-    //     data.push(item);
-    //     hour++;
-    //   }
-
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        url:site_url+"/trend/getJsonData",
+        url:site_url+"/trend/saveToJsonFile",
         type:"POST",
         data:{
             test:"Hallo"
         },
         dataType:"json",
-        success:function(data){
-
+        success:function(response){
+            anychart.data.loadJsonFile('http://localhost:8000/files/tradingData.json', function(data) {
+            // create data table on loaded data
             var dataTable = anychart.data.table();
             dataTable.addData(data);
 
@@ -46,6 +29,8 @@ anychart.onDocumentReady(function() {
 
             // create stock chart
             var chart = anychart.stock();
+
+            console.log(chart);
 
             // create first plot on the chart
             var plot = chart.plot(0);
@@ -75,8 +60,6 @@ anychart.onDocumentReady(function() {
             // initiate chart drawing
             chart.draw();
 
-
-
             // reset the select list to the first option
             chart.listen("annotationDrawingFinish", function(){
                // get the number of annotations
@@ -90,7 +73,7 @@ anychart.onDocumentReady(function() {
                             xAnchor:plot.annotations().getAnnotationAt(annotationsCount - 1).xAnchor()
                         },
                         dataType:"json",
-                        success:function(){
+                        success:function(response){
                             alert("Saved!");
                         }
                     });
@@ -110,7 +93,6 @@ anychart.onDocumentReady(function() {
                 $.ajax({
                     url:site_url+"/trend/getTrendLines",
                     type:"GET",
-                    async:false,
                     data:{
                         test:"Hallo"
                     },
@@ -134,40 +116,49 @@ anychart.onDocumentReady(function() {
             // init range selector
             rangeSelector.render(chart);
 
-              // create annotations
-              $("#typeSelect").change(function(){
+            // create annotations
+            $("#typeSelect").change(function(){
                 plot.annotations().startDrawing(this.value);
-              });
+            });
 
             // remove all annotations
-            $("#removeAll").click(function(){
-                plot.annotations().removeAllAnnotations();
-            });
+            // $("#removeAll").click(function(){
+            //     plot.annotations().removeAllAnnotations();
+            // });
 
             // cancel drawing
             $("#cancel").click(function(){
                 plot.annotations().cancelDrawing();
                 document.getElementById("typeSelect").value = "default";
+            });
+
+            // cancel drawing
+            $("#clearSel").click(function(){
+                plot.annotations().unselect();
+            });
+
+            //remove selected
+            $("#removeSel").click(function(){
+                if(confirm("Do you want to delete this marker?") == true){
+                    $.ajax({
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url:site_url+"/trend/removeTrendLines",
+                        type:"POST",
+                        data:{
+                            xAnchor:plot.annotations().getSelectedAnnotation().xAnchor()
+                        },
+                        dataType:"json",
+                        success:function(response){
+                            var selectedAnnotation = plot.annotations().getSelectedAnnotation();
+                            // remove the selected annotation
+                            plot.annotations().removeAnnotation(selectedAnnotation);
+                            alert("Removed!");
+                        }
+                    });
+                }
+            });
 
             });
-            //});
         }
     });
   });
-
-
-
-// $(function(){
-//     $.ajax({
-//         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-//         url:site_url+"/trend/getJsonData",
-//         type:"POST",
-//         data:{
-//             test:"Hallo"
-//         },
-//         dataType:"json",
-//         success:function(){
-//             alert("hallo");
-//         }
-//     });
-// });
