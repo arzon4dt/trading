@@ -19,6 +19,12 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
+                <select id="typeSelect">
+                    <option value="default" selected disabled>Annotation Type</option>
+                    <option value="vertical-line">Vertical Line</option>
+                </select>
+                <button id="removeAll">Remove All</button>
+                <button id="cancel">Cancel</button>
             <div id="candlestickchart"></div>
           </div>
           <!-- /.box-body -->

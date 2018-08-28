@@ -75,6 +75,55 @@ anychart.onDocumentReady(function() {
             // initiate chart drawing
             chart.draw();
 
+
+
+            // reset the select list to the first option
+            chart.listen("annotationDrawingFinish", function(){
+               // get the number of annotations
+               var annotationsCount = plot.annotations().getAnnotationsCount();
+               if(confirm("Do you want to save this marker?") == true){
+                    $.ajax({
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        url:site_url+"/trend/saveTrendLines",
+                        type:"POST",
+                        data:{
+                            xAnchor:plot.annotations().getAnnotationAt(annotationsCount - 1).xAnchor()
+                        },
+                        dataType:"json",
+                        success:function(){
+                            alert("Saved!");
+                        }
+                    });
+               }else{
+
+                    // remove the last annotation
+                    plot.annotations().removeAnnotationAt(annotationsCount - 1);
+               }
+               document.getElementById("typeSelect").value = "default";
+            });
+
+
+
+            // load all saved annotations
+
+            var annotations = function(){
+                $.ajax({
+                    url:site_url+"/trend/getTrendLines",
+                    type:"GET",
+                    async:false,
+                    data:{
+                        test:"Hallo"
+                    },
+                    dataType:"json",
+                    success:function(data){
+                        //console.log(data);
+                        chart.plot().annotations().fromJson(data);
+                    }
+                });
+            };
+
+            annotations();
+
             // create range picker
             var rangePicker = anychart.ui.rangePicker();
             // init range picker
@@ -84,10 +133,29 @@ anychart.onDocumentReady(function() {
             var rangeSelector = anychart.ui.rangeSelector();
             // init range selector
             rangeSelector.render(chart);
+
+              // create annotations
+              $("#typeSelect").change(function(){
+                plot.annotations().startDrawing(this.value);
+              });
+
+            // remove all annotations
+            $("#removeAll").click(function(){
+                plot.annotations().removeAllAnnotations();
+            });
+
+            // cancel drawing
+            $("#cancel").click(function(){
+                plot.annotations().cancelDrawing();
+                document.getElementById("typeSelect").value = "default";
+
+            });
             //});
         }
     });
   });
+
+
 
 // $(function(){
 //     $.ajax({

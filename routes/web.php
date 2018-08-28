@@ -42,6 +42,8 @@ Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logou
     Route::prefix('trend')->group(function(){
         Route::get('/', 'TrendController@index')->name('trend');
         Route::post('/getJsonData', 'TrendController@getJsonData')->name('data-import.get-json-data');
+        Route::get('/getTrendLines', 'TrendController@getTrendLines')->name('data-import.get-trend-line');
+        Route::post('/saveTrendLines', 'TrendController@saveTrendLines')->name('data-import.save-trend-line');
     });
 
 
