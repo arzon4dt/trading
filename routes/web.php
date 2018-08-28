@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('home/getJsonData', 'HomeController@getJsonData')->name('home.get-json-data');
 Route::get('/users/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
     Route::prefix('admin')->group(function(){

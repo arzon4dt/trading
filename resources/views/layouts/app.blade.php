@@ -79,6 +79,11 @@
             @yield('content')
         </main>
     </div>
+<!-- jQuery 3 -->
+<script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+<script>
+    var site_url = "{{ url('/') }}";
+</script>
 <!-- AnyChart -->
 <script src="https://cdn.anychart.com/releases/8.3.0/js/anychart-base.min.js"></script>
 <script src="https://cdn.anychart.com/releases/8.3.0/js/anychart-ui.min.js"></script>

@@ -27,7 +27,7 @@ class DataImportController extends Controller
      */
     public function index()
     {
-        return view('backend.data-import', ['js' => 'data-import']);
+        return view('backend.data-import', ['js' => 'data-import', 'menu' => 'Import']);
     }
 
     public function importFile(Request $request){
