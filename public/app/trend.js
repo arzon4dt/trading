@@ -10,7 +10,7 @@ anychart.onDocumentReady(function() {
         },
         dataType:"json",
         success:function(response){
-            anychart.data.loadJsonFile('http://localhost:8000/files/tradingData.json', function(data) {
+            anychart.data.loadJsonFile(site_url+'/files/tradingData.json', function(data) {
             // create data table on loaded data
             var dataTable = anychart.data.table();
             dataTable.addData(data);
@@ -53,7 +53,7 @@ anychart.onDocumentReady(function() {
             chart.scroller().candlestick(mapping);
 
             // set chart selected date/time range
-            chart.selectRange('2018-08-01 00:00', '2018-08-17 16:58:00');
+            chart.selectRange('2018-08-01 00:00:00', '2018-08-17 16:58:00');
 
             // set container id for the chart
             chart.container('candlestickchart');
@@ -84,8 +84,6 @@ anychart.onDocumentReady(function() {
                }
                document.getElementById("typeSelect").value = "default";
             });
-
-
 
             // load all saved annotations
 

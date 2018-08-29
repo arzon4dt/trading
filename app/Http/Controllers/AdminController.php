@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class AdminController extends Controller
 {
@@ -25,4 +26,10 @@ class AdminController extends Controller
     {
         return view('backend.home', ['js' => 'dashboard', 'menu' => 'Dashboard']);
     }
+
+    function getDetailsById(Request $request){
+        $details = DB::table('admins')->select('name', 'email')->where('id',"=",$request->input('id'))->first();
+        return response()->json($details);
+    }
+
 }

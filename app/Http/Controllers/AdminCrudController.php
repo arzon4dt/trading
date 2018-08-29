@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Admin as Admin;
 use Yajra\Datatables\Datatables;
+
 
 class AdminCrudController extends Controller
 {
@@ -31,5 +33,29 @@ class AdminCrudController extends Controller
     public function anyData()
     {
         return Datatables::of(Admin::query())->make(true);
+    }
+
+    public function add(Request $request){
+        $add = Admin::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+        ]);
+
+        return response()->json($add);
+    }
+
+    public function update(Request $request){
+        $update = Admin::where("id", $request->input('id'))->update(array(
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+        ));
+
+        return response()->json($update);
+    }
+
+    public function delete(Request $request){
+        $delete = Admin::where("id", $request->input('id'))->delete();
+        return response()->json($delete);
     }
 }
